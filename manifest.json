@@ -1,6 +1,6 @@
 {
-  "name": "OKBase batch fill",
-  "description": "Tool for easier fill whole week.",
+  "name": "OKBase batch insert",
+  "description": "Tool for insert multiple same records by day to OKBase.",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage","activeTab", "scripting", "management"],

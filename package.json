@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "node bundler.js",
+    "watch": "node bundler.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.8.49",
+    "yargs": "^16.2.0"
+  }
+}

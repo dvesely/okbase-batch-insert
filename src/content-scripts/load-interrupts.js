@@ -2,20 +2,25 @@ import { storage } from "../lib/storage";
 import { getSelectBoxItems } from "../utils";
 import { closeDialog, loadForm } from "../utils/okBaseUtil";
 
-
 (function () {
-    //loadSelectBox();
-    chrome.runtime.sendMessage("INTERRUPT_ITEMS_LOADED");
+  loadSelectBox().catch((error) => {
+    alert(error);
+  });
 })();
 
 async function loadSelectBox() {
-    const { dialog, form } = await loadForm();
+  const { dialog, form } = await loadForm();
 
-    const items = Array.from(await getSelectBoxItems(form, 'preruseniZacatek')).map(x => x.innerText);
+  const itemElements = Array.from(
+    await getSelectBoxItems(form, "preruseniZacatek")
+  );
+  const items = itemElements.map((x) => x.innerText);
 
-    await storage.set('interruptItems', items);    
+  document.body.click(itemElements && itemElements[0].click()); // close items;
 
-    
+  await storage.set("interruptItems", items);
 
-    closeDialog(dialog);
+  closeDialog(dialog);
+
+  chrome.runtime.sendMessage("INTERRUPT_ITEMS_LOADED");
 }

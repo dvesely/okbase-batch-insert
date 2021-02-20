@@ -7,16 +7,14 @@
   "action": {
     "default_popup": "src/www/popup.html",
     "default_icon": {
-      "16": "/src/www/images/get_started16.png",
-      "32": "/src/www/images/get_started32.png",
-      "48": "/src/www/images/get_started48.png",
-      "128": "/src/www/images/get_started128.png"
+      "16": "/src/www/images/okbase-batch-icon16.png",
+      "32": "/src/www/images/okbase-batch-icon32.png",
+      "64": "/src/www/images/okbase-batch-icon64.png"
     }
   },
   "icons": {
-    "16": "/src/www/images/get_started16.png",
-    "32": "/src/www/images/get_started32.png",
-    "48": "/src/www/images/get_started48.png",
-    "128": "/src/www/images/get_started128.png"
+    "16": "/src/www/images/okbase-batch-icon16.png",
+    "32": "/src/www/images/okbase-batch-icon32.png",
+    "64": "/src/www/images/okbase-batch-icon64.png"
   }
 }

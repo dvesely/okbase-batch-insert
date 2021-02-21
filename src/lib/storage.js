@@ -6,8 +6,8 @@ class Storage {
   }
 
   /**
-   * 
-   * @param {string} syncName 
+   *
+   * @param {string} syncName
    */
   get(syncName) {
     log("on get", syncName);
@@ -21,9 +21,9 @@ class Storage {
   }
 
   /**
-   * 
-   * @param {string} syncName 
-   * @param {any} value 
+   *
+   * @param {string} syncName
+   * @param {any} value
    */
   set(syncName, value) {
     log("on set", syncName, value);
@@ -35,12 +35,10 @@ class Storage {
       });
     });
   }
-
-  
 }
 
 export const storage = new Storage(chrome.storage.sync);
 
 function log(...args) {
-    logger.log("storage", ...args);
-  }
+  logger.log("storage", ...args);
+}

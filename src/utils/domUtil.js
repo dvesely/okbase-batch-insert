@@ -1,7 +1,7 @@
 import { wait } from "./commonUtil.js";
 
 export async function setDateTextBox(form, name, date) {
-  const widget = findWidgetElement(form, name);    
+  const widget = findWidgetElement(form, name);
 
   if (widget === null) throw `Widget DateBox '${name}' not found.`;
 
@@ -12,18 +12,18 @@ export async function setDateTextBox(form, name, date) {
   //const hidden = tb.parentElement.querySelector('input[type="hidden"]');
 
   //if (hidden == null) throw `DateTextBox '${name}' hidden input not exists.`;
-  
-  fireEvent(widget, 'focus');
-  
-  await wait(200);
-  
-  tb.value = date;
-  fireEvent(widget, 'blur');
-  
+
+  fireEvent(widget, "focus");
+
   await wait(200);
 
-  fireEvent(widget, 'focus');
-  fireEvent(widget, 'blur');
+  tb.value = date;
+  fireEvent(widget, "blur");
+
+  await wait(200);
+
+  fireEvent(widget, "focus");
+  fireEvent(widget, "blur");
 }
 
 export async function setTextBox(form, name, value) {
@@ -42,34 +42,36 @@ export async function setSelectBox(form, name, textValue) {
   let found = false;
 
   for (const item of items) {
-      if (item.innerText.toUpperCase() === textValue) {
-          item.click();
-          found = true;
-          break;
-      }
-  }    
+    if (item.innerText.toUpperCase() === textValue) {
+      item.click();
+      found = true;
+      break;
+    }
+  }
 
   if (!found) throw `SelectBox '${name}' item '${textValue}' not found.`;
 }
 
 /**
- * 
- * @param {Element} form 
+ *
+ * @param {Element} form
  * @param {string} name
- * @return {NodeList} 
+ * @return {NodeList}
  */
 export async function getSelectBoxItems(form, name) {
   const sb = findWidgetElement(form, name);
 
   if (sb == null) throw `SelectBox '${name}' was not found.`;
 
-  const btnArrow = sb.querySelector('.dijitArrowButton');
+  const btnArrow = sb.querySelector(".dijitArrowButton");
 
   if (btnArrow == null) throw `SelectBox '${name}' btnArrow not found.`;
 
-  fireEvent(btnArrow, 'pointerdown');
+  fireEvent(btnArrow, "pointerdown");
 
-  const items = (await findElement(`#${form.id}_${name}_popup`)).querySelectorAll('.dijitMenuItem');
+  const items = (
+    await findElement(`#${form.id}_${name}_popup`)
+  ).querySelectorAll(".dijitMenuItem");
 
   return items;
 }
@@ -87,33 +89,33 @@ export function findWidgetElement(form, name) {
 }
 
 export async function findElement(selector, parent, callback) {
-    const ms = 200;
-    const maxTime = 3000; // 3 sec
+  const ms = 200;
+  const maxTime = 3000; // 3 sec
 
-    const test = parent == null ? document : parent;
+  const test = parent == null ? document : parent;
 
-    return new Promise((resolve, reject) => {
-      let current = 0;
+  return new Promise((resolve, reject) => {
+    let current = 0;
 
-      setInterval(function () {      
-        if (current >= maxTime) {
-          reject(`Selector '${selector}' not found after ${maxTime/1000}secs.`);
+    setInterval(function () {
+      if (current >= maxTime) {
+        reject(`Selector '${selector}' not found after ${maxTime / 1000}secs.`);
+      }
+      current += ms;
+
+      const el = test.querySelector(selector);
+
+      if (el !== null) {
+        if (typeof callback === "function") {
+          resolve(callback(el));
+        } else {
+          resolve(el);
         }
-        current += ms;
-  
-        const el = test.querySelector(selector);
-  
-        if (el !== null) {
-            if (typeof callback === 'function') {
-                resolve(callback(el));
-            } else {
-                resolve(el);
-            }          
-        };
-      }, ms);
-    });  
-  }
+      }
+    }, ms);
+  });
+}
 
-export function fireEvent(el, name) {    
-    el.dispatchEvent(new Event(name));
+export function fireEvent(el, name) {
+  el.dispatchEvent(new Event(name));
 }

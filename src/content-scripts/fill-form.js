@@ -25,13 +25,13 @@ import { loadForm } from "../utils/okBaseUtil";
  */
 
 (function () {
-  fillForm().catch(error => {
+  fillForm().catch((error) => {
     alert(error);
   });
 })();
 
 async function fillForm() {
-    const grid = document.querySelector(".dgrid.PlanovaniGrid");
+  const grid = document.querySelector(".dgrid.PlanovaniGrid");
 
   if (grid == null) throw `Grid was not found.`;
 
@@ -40,8 +40,13 @@ async function fillForm() {
   const beginInterrupt = await storage.get("beginInterrupt");
   const endInterrupt = await storage.get("endInterrupt");
 
-  if (!isValidDate(from) || !isValidDate(to) || !beginInterrupt || !endInterrupt) {
-      throw `You must fill all fields.`;
+  if (
+    !isValidDate(from) ||
+    !isValidDate(to) ||
+    !beginInterrupt ||
+    !endInterrupt
+  ) {
+    throw `You must fill all fields.`;
   }
 
   const record = {
@@ -61,8 +66,8 @@ async function fillForm() {
  * @param {Record} record
  */
 async function addDays(grid, { from, to, beginInterrupt, endInterrupt }) {
-    const timeFrom = getTime(from);
-    const timeTo = getTime(to);
+  const timeFrom = getTime(from);
+  const timeTo = getTime(to);
 
   let date = getDate(from);
 

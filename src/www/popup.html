@@ -2,27 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="button.css" />
+    <link rel="stylesheet" href="../../dist/main.css" />
     <link rel="stylesheet" href="flatpickr.min.css" />
     <script src="flatpickr.js"></script>
     <script src="flatpickr.l10n.cs.js"></script>
     <style>
       body {
         height: 400px;
-        width: 500px;
+        width: 355px;
       }
     </style>
   </head>
   <body>
     <div>
       <label for="dateFrom">Začátek:</label>
-      <input type="text" id="dateFrom" />
-      <input type="text" id="timeFrom" />
+      <input class="date" type="text" id="dateFrom" />
+      <input class="time" type="text" id="timeFrom" />
     </div>
     <div>
       <label for="dateTo">Konec:</label>
-      <input type="text" id="dateTo" />
-      <input type="text" id="timeTo" />
+      <input class="date" type="text" id="dateTo" />
+      <input class="time" type="text" id="timeTo" />
     </div>
     <div>
       <label for="beginInterrupt">Počáteční přerušení:</label>
@@ -32,8 +32,10 @@
       <label for="endInterrupt">Koncové přerušení:</label>
       <select id="endInterrupt"></select>
     </div>
-    <button id="changeColor">OK</button>
-    <button id="btnLoadItems">Load items</button>
+    <div class="button-group">
+      <button id="changeColor">OK</button>
+      <button id="btnLoadItems">Načít přerušení</button>
+    </div>
     <div id="log"></div>
     <script type="module" src="popup.js"></script>
   </body>

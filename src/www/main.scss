@@ -1,0 +1,37 @@
+$height: 30px;
+
+label {  
+  display: inline-block;
+  width: 120px;
+  height: $height;
+}
+
+select {
+  height: $height;
+  width: 230px;
+}
+
+button {
+  height: $height;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+.date {
+  width: 80px;
+  height: $height;
+  display: inline-block;
+}
+
+.time {
+  width: 50px;
+  height: $height;
+  display: inline-block;
+}

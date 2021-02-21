@@ -39,14 +39,24 @@ Rozšíření pro Chrome pro jednodušší přidávání záznamu za určité ob
 
 11. Po stisknutí tlačíka **OK** by se měli do **OKBase** přidat požadované záznamy.
 
-## Příklad
-
-Potřebujete si do OKBase zadat Home office za 5 dní. Bez tohoto nástroje byste museli ručně vyplnit formulář 5x stejnými daty. S tímto rozšířením vám to stačí vyplnit pouze jednou.
-
-| ![Ukázka rozšíření](docs/example1.jpg) |
-| --- |
-
 ### Tlačítka
 
 - Tlačítko **OK** slouží pro potvrzení akce a přídání záznamů do OKBase.
 - Tlačítko **Načíst přerušení** je pro načtení aktulně možných přerušení v OKBase (select boxy).
+
+## Příklad
+
+Potřebujete si do **OKBase** zadat **Home office** za obodbí **22. - 26. 2. 2021** od **8:00 do 16:00**. Bez tohoto nástroje byste museli ručně vyplnit formulář za každý den stejnými daty (5x). S tímto nástrojem vyplníte data pouze jednou a nástroj za vás automaticky vyplní formulář za každý den.
+
+| ![Ukázka rozšíření](docs/example1.jpg) |
+| --- |
+
+Do **OKBase** se automaticky přidají tyto záznamy.
+
+Přerušení|Od|Do
+-|-|-
+Home office / Obecný konec|22.02.2021 8:00|22.02.2021 16:00
+Home office / Obecný konec|23.02.2021 8:00|23.02.2021 16:00
+Home office / Obecný konec|24.02.2021 8:00|24.02.2021 16:00
+Home office / Obecný konec|25.02.2021 8:00|25.02.2021 16:00
+Home office / Obecný konec|26.02.2021 8:00|26.02.2021 16:00

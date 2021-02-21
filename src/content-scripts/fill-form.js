@@ -153,6 +153,6 @@ function isBusinessDay(date) {
 function isWeekend(date) {
   return (
     date.getDay() === 0 || // sunday
-    date.getDay() === 6
-  ); // saturday
+    date.getDay() === 6 // saturday
+  );
 }

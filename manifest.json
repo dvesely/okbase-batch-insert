@@ -1,6 +1,6 @@
 {
   "name": "OKBase batch insert",
-  "description": "Tool for insert multiple same records by day to OKBase.",
+  "description": "Pomocný nástroj pro rozdělení záznamu za období na dny a přídání do OKBase.",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage","activeTab", "scripting"],

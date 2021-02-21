@@ -117,7 +117,7 @@ export function formatDate(date) {
  * @param {Date} date
  */
 export function formatTime(date) {
-  return date.getHours() + ":" + date.getMinutes();
+  return date.getHours() + ":" + addZero(date.getMinutes());
 }
 
 /**

@@ -48,6 +48,8 @@ Rozšíření pro Chrome pro jednodušší přidávání záznamu za určité ob
 
 Potřebujete si do **OKBase** zadat **Home office** za obodbí **22. - 26. 2. 2021** od **8:00 do 16:00**. Bez tohoto nástroje byste museli ručně vyplnit formulář za každý den stejnými daty (5x). S tímto nástrojem vyplníte data pouze jednou a nástroj za vás automaticky vyplní formulář za každý den.
 
+**Zapisují se pouze pracovní dny. Pokud tedy budete chtít vykázat práci za celý měsíc, tak se do OKBase zapíší pouze dny mimo víkend (státní svátky to nezohledňuje).**
+
 | ![Ukázka rozšíření](docs/example1.jpg) |
 | --- |
 

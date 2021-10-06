@@ -69,6 +69,8 @@ export async function getSelectBoxItems(form, name) {
 
   fireEvent(btnArrow, "pointerdown");
 
+  await wait(200);
+
   const items = (
     await findElement(`#${form.id}_${name}_popup`)
   ).querySelectorAll(".dijitMenuItem");

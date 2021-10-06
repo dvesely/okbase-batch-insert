@@ -4,9 +4,18 @@ class Logger {
   _logs = [];
   _onChnageHooks = [];
 
+  clear() {
+    this._logs = [];
+    this._callCallbacks();
+  }
+
   log(...args) {
     pushMax(this._logs, JSON.stringify(args), MAX_LOGS);
 
+    this._callCallbacks();
+  }
+
+  _callCallbacks() {
     for (const callback of this._onChnageHooks) {
       callback(this._logs.slice(0));
     }

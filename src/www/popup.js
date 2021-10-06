@@ -1,14 +1,30 @@
 import { logger } from "../lib/logger.js";
 import { storage } from "../lib/storage.js";
+import { formatDateJson } from "../utils/dateTimeUtil.js";
 
-const logOutput = document.querySelector("#log");
+// const logOutput = document.querySelector("#log");
 
 // logger.onChange((logs) => {
-//   logOutput.innerHTML = logs.map(x => `<div>${x}</div>`).join('');
+//   logOutput.innerHTML = logs.map((x) => `<div>${x}</div>`).join("");
 // });
 
 const changeColor = document.getElementById("changeColor");
 const btnLoadItems = document.getElementById("btnLoadItems");
+
+(async function () {
+  const today = formatDateJson(new Date());
+  const lastUsed = await storage.get("lastUsed");
+
+  if (!lastUsed) {
+    await storage.set("lastUsed", today);
+    lastUsed = today;
+  }
+
+  if (lastUsed < today) {
+    await storage.set("lastUsed", today);
+    updateFlatPickrInputDate("dateFrom", "#dateFrom", today);
+  }
+})();
 
 flatpickr.localize(flatpickr.l10ns.cs);
 
@@ -115,7 +131,40 @@ async function reloadSelectBoxItems() {
 async function onChange(selectedDate, dateStr, instance) {
   const syncName = this;
 
+  // zajisteni aby from nebylo vetsi jak to
+  switch (syncName) {
+    case "dateFrom":
+      const to = await storage.get("dateTo");
+      if (dateStr > to) {
+        await updateFlatPickrInputDate("dateTo", "#dateTo", dateStr);
+      }
+      break;
+    case "dateTo":
+      const from = await storage.get("dateFrom");
+      if (dateStr < from) {
+        await updateFlatPickrInputDate("dateFrom", "#dateFrom", dateStr);
+      }
+      break;
+    default:
+      break;
+  }
+
   await storage.set(syncName, dateStr);
+}
+
+/**
+ * Nastavi inputu s instanci _flatpickr datum s hodnotou dateStr
+ * @param {string} syncName 
+ * @param {string} selector 
+ * @param {string} value 
+ */
+async function updateFlatPickrInputDate(syncName, selector, value) {
+  const input = document.querySelector(selector);
+
+  if (!input)
+    throw new Error(`Flapickr input with selector '${selector}' not found.`);
+
+  input._flatpickr.setDate(value, true);
 }
 
 async function onChnageSelectBox({ target }) {

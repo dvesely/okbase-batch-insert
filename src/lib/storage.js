@@ -35,6 +35,19 @@ class Storage {
       });
     });
   }
+
+  /**
+   *
+   * @param {string} syncName
+   */
+  del(syncName) {
+    return new Promise((resolve) => {
+      this._storage.remove([syncName], function () {
+        resolve();
+        log("del", syncName);
+      });
+    });
+  }
 }
 
 export const storage = new Storage(chrome.storage.sync);

@@ -69,6 +69,10 @@ async function addDays(grid, { from, to, beginInterrupt, endInterrupt }) {
   const timeFrom = getTime(from);
   const timeTo = getTime(to);
 
+  if (from > to) {
+    throw new Error("Začátek je větší než konec.");
+  }
+
   let date = getDate(from);
 
   while (date <= to) {
@@ -95,9 +99,10 @@ async function addDays(grid, { from, to, beginInterrupt, endInterrupt }) {
 async function insertRecord(grid, { from, to, beginInterrupt, endInterrupt }) {
   const { dialog, form } = await loadForm();
 
+  await setSelectBox(form, "preruseniZacatek", beginInterrupt);
+  await setSelectBox(form, "preruseniKonec", endInterrupt);
+
   await Promise.all([
-    setSelectBox(form, "preruseniZacatek", beginInterrupt),
-    setSelectBox(form, "preruseniKonec", endInterrupt),
     setTextBox(form, "casOd", formatTime(from)),
     setTextBox(form, "casDo", formatTime(to)),
   ]);

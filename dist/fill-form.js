@@ -4,8 +4,15 @@
   var Logger = class {
     _logs = [];
     _onChnageHooks = [];
+    clear() {
+      this._logs = [];
+      this._callCallbacks();
+    }
     log(...args) {
       pushMax(this._logs, JSON.stringify(args), MAX_LOGS);
+      this._callCallbacks();
+    }
+    _callCallbacks() {
       for (const callback of this._onChnageHooks) {
         callback(this._logs.slice(0));
       }
@@ -47,6 +54,14 @@
         });
       });
     }
+    del(syncName) {
+      return new Promise((resolve) => {
+        this._storage.remove([syncName], function() {
+          resolve();
+          log("del", syncName);
+        });
+      });
+    }
   };
   var storage = new Storage(chrome.storage.sync);
   function log(...args) {
@@ -82,7 +97,7 @@
   function parseDateTimeFromGrid(dateTime) {
     const [date, time] = dateTime.trim().split(" ");
     const [day, month, year] = date.split(".");
-    const [hours, minutes] = time.split(":");
+    const [hours, minutes] = (time || "00:00").split(":");
     return new Date(year, Number(month) - 1, day, hours, minutes);
   }
   async function parseDateTimeFromStorage(dateName, timeName) {
@@ -151,6 +166,7 @@
     if (btnArrow == null)
       throw `SelectBox '${name}' btnArrow not found.`;
     fireEvent(btnArrow, "pointerdown");
+    await wait(200);
     const items = (await findElement(`#${form.id}_${name}_popup`)).querySelectorAll(".dijitMenuItem");
     return items;
   }
@@ -232,6 +248,9 @@
   async function addDays(grid, {from, to, beginInterrupt, endInterrupt}) {
     const timeFrom = getTime(from);
     const timeTo = getTime(to);
+    if (from > to) {
+      throw new Error("Za\u010D\xE1tek je v\u011Bt\u0161\xED ne\u017E konec.");
+    }
     let date = getDate(from);
     while (date <= to) {
       if (isBusinessDay(date)) {
@@ -248,9 +267,9 @@
   }
   async function insertRecord(grid, {from, to, beginInterrupt, endInterrupt}) {
     const {dialog, form} = await loadForm();
+    await setSelectBox(form, "preruseniZacatek", beginInterrupt);
+    await setSelectBox(form, "preruseniKonec", endInterrupt);
     await Promise.all([
-      setSelectBox(form, "preruseniZacatek", beginInterrupt),
-      setSelectBox(form, "preruseniKonec", endInterrupt),
       setTextBox(form, "casOd", formatTime(from)),
       setTextBox(form, "casDo", formatTime(to))
     ]);

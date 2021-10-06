@@ -4,8 +4,15 @@
   var Logger = class {
     _logs = [];
     _onChnageHooks = [];
+    clear() {
+      this._logs = [];
+      this._callCallbacks();
+    }
     log(...args) {
       pushMax(this._logs, JSON.stringify(args), MAX_LOGS);
+      this._callCallbacks();
+    }
+    _callCallbacks() {
       for (const callback of this._onChnageHooks) {
         callback(this._logs.slice(0));
       }
@@ -47,6 +54,14 @@
         });
       });
     }
+    del(syncName) {
+      return new Promise((resolve) => {
+        this._storage.remove([syncName], function() {
+          resolve();
+          log("del", syncName);
+        });
+      });
+    }
   };
   var storage = new Storage(chrome.storage.sync);
   function log(...args) {
@@ -69,6 +84,7 @@
     if (btnArrow == null)
       throw `SelectBox '${name}' btnArrow not found.`;
     fireEvent(btnArrow, "pointerdown");
+    await wait(200);
     const items = (await findElement(`#${form.id}_${name}_popup`)).querySelectorAll(".dijitMenuItem");
     return items;
   }

@@ -1,4 +1,4 @@
-import { storage } from "../lib/storage";
+import { storage } from "../lib/storage.js";
 
 export function isEqualDateTime(d1, d2) {
   return compareDate(d1, d2) < 1000;
@@ -63,7 +63,7 @@ export function getDate(date) {
 export function parseDateTimeFromGrid(dateTime) {
   const [date, time] = dateTime.trim().split(" ");
   const [day, month, year] = date.split(".");
-  const [hours, minutes] = time.split(":");
+  const [hours, minutes] = (time || '00:00').split(":");
 
   return new Date(year, Number(month) - 1, day, hours, minutes);
 }
@@ -101,7 +101,7 @@ export async function parseDateTimeFromStorage(dateName, timeName) {
  * @param {Date} date
  */
 export function formatDateJson(date) {
-  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
+  return [date.getFullYear(), addZero(date.getMonth() + 1), addZero(date.getDate())].join("-");
 }
 
 /**

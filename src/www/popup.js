@@ -13,7 +13,7 @@ const btnLoadItems = document.getElementById("btnLoadItems");
 
 (async function () {
   const today = formatDateJson(new Date());
-  const lastUsed = await storage.get("lastUsed");
+  let lastUsed = await storage.get("lastUsed");
 
   if (!lastUsed) {
     await storage.set("lastUsed", today);

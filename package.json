@@ -1,5 +1,6 @@
 {
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run bundle & npm run sass",
     "bundle": "node bundler.js",

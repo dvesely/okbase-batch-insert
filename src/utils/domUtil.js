@@ -67,15 +67,32 @@ export async function getSelectBoxItems(form, name) {
 
   if (btnArrow == null) throw `SelectBox '${name}' btnArrow not found.`;
 
-  fireEvent(btnArrow, "pointerdown");
+  const popupName = `#${form.id}_${name}_popup`;
 
-  await wait(200);
+  await fireEventUntil(btnArrow, "pointerdown", () => findElement(popupName, null, null, 300).then(() => true));
 
   const items = (
-    await findElement(`#${form.id}_${name}_popup`)
+    await findElement(popupName)
   ).querySelectorAll(".dijitMenuItem");
 
   return items;
+}
+
+/**
+ * 
+ * @param {HTMLElement} el 
+ * @param {string} name Event name
+ * @param {() => Promise<bool>} interrupt Podminka kdy se volani eventu prerusi 
+ */
+export async function fireEventUntil(el, name, interrupt) {
+	let fires = 0;
+	do {
+		fireEvent(el, name);
+		fires++;
+		if (await interrupt().catch(() => false)) {
+			break;
+		}
+	} while (fires <= 3);
 }
 
 export function findFormElement(form, name) {
@@ -90,10 +107,8 @@ export function findWidgetElement(form, name) {
   return ctrl;
 }
 
-export async function findElement(selector, parent, callback) {
+export async function findElement(selector, parent, callback, maxTime = 3000) {
   const ms = 200;
-  const maxTime = 3000; // 3 sec
-
   const test = parent == null ? document : parent;
 
   return new Promise((resolve, reject) => {

@@ -83,10 +83,20 @@
     const btnArrow = sb.querySelector(".dijitArrowButton");
     if (btnArrow == null)
       throw `SelectBox '${name}' btnArrow not found.`;
-    fireEvent(btnArrow, "pointerdown");
-    await wait(200);
-    const items = (await findElement(`#${form.id}_${name}_popup`)).querySelectorAll(".dijitMenuItem");
+    const popupName = `#${form.id}_${name}_popup`;
+    await fireEventUntil(btnArrow, "pointerdown", () => findElement(popupName, null, null, 300).then(() => true));
+    const items = (await findElement(popupName)).querySelectorAll(".dijitMenuItem");
     return items;
+  }
+  async function fireEventUntil(el, name, interrupt) {
+    let fires = 0;
+    do {
+      fireEvent(el, name);
+      fires++;
+      if (await interrupt().catch(() => false)) {
+        break;
+      }
+    } while (fires <= 3);
   }
   function findFormElement(form, name) {
     const ctrl = form.querySelector(`#${form.id}_${name}`);
@@ -96,9 +106,8 @@
     const ctrl = form.querySelector(`#widget_${form.id}_${name}`);
     return ctrl;
   }
-  async function findElement(selector, parent, callback) {
+  async function findElement(selector, parent, callback, maxTime = 3e3) {
     const ms = 200;
-    const maxTime = 3e3;
     const test = parent == null ? document : parent;
     return new Promise((resolve, reject) => {
       let current = 0;

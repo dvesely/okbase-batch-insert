@@ -1,9 +1,13 @@
 {
   "name": "OKBase batch insert",
   "description": "Pomocný nástroj pro rozdělení záznamu za období na dny a přídání do OKBase.",
-  "version": "1.0",
+  "version": "1.0.1",
   "manifest_version": 3,
-  "permissions": ["storage","activeTab", "scripting"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
   "action": {
     "default_popup": "src/www/popup.html",
     "default_icon": {
